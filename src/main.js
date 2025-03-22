@@ -1,4 +1,5 @@
-import App from './App';
+import App from '@/App';
 
-const result = App();
-console.log(result);
+const el = App();
+
+console.log(JSON.stringify(el, null, 2));
