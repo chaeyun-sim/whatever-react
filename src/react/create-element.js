@@ -7,5 +7,5 @@ export function createElement(type, props, ...children) {
     },
   };
 
-  return Object.freeze(dom);
+  return dom;
 }
