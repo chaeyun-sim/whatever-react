@@ -5,6 +5,7 @@ export default {
       '@babel/preset-react',
       {
         runtime: 'automatic',
+        importSource: './src/react',
       },
     ],
   ],
