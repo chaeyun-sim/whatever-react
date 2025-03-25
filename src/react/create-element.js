@@ -1,11 +1,8 @@
 import { Fragment } from './jsx-runtime';
 
 function checkChildren(children) {
-  if (children.flat().length === 0) return null;
-  if (
-    (typeof children === 'string' && children.flat().length === 1) ||
-    typeof children === 'object'
-  )
+  if (!children.length) return null;
+  if (typeof children === 'string' || children.flat().length === 1 || typeof children === 'object')
     return children[0];
   return children;
 }
