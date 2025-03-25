@@ -5,4 +5,6 @@ function jsx(tagName, props) {
   return createElement(tagName, rest, children);
 }
 
+export const Fragment = Symbol('Fragment');
+
 export { jsx, jsx as jsxs };
