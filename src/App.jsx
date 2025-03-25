@@ -1,11 +1,15 @@
-import Header from '@/components/Header';
-
 export default function App() {
   return (
-    <div>
-      {/* <Header /> */}
-      <span>1</span>2
-      <h1 />
-    </div>
+    <>
+      <div>
+        <span>hi</span>
+        <div>{2}</div>
+        <div>{null}</div>
+        <div>{undefined}</div>
+        <div>{true}</div>
+        <div>{false}</div>
+        <div>{[1, 2, 3]}</div>
+      </div>
+    </>
   );
 }
