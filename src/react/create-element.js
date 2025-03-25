@@ -4,13 +4,25 @@ export function createElement(type, props, ...children) {
     props: {},
   };
 
-  if (typeof type === 'string') {
+  const checkChildren = () => {
+    const filteredChildren = children.filter(child => child);
+    if (filteredChildren.length === 1) return children[0];
+    if (filteredChildren.length === 0) return null;
+    return children;
+  };
+
+  if (typeof type === 'string' || type === null) {
     dom.props = {
       ...props,
-      children: children.length > 1 ? children : children[0],
+      children: checkChildren(children),
     };
   } else if (typeof type === 'function') {
     dom.props = type();
+  } else {
+    dom.props = {
+      ...props,
+      children: null,
+    };
   }
 
   return Object.assign(dom);
