@@ -1,14 +1,19 @@
+import { Fragment } from './jsx-runtime';
+
+function checkChildren(children) {
+  if (children.flat().length === 0) return null;
+  if (
+    (typeof children === 'string' && children.flat().length === 1) ||
+    typeof children === 'object'
+  )
+    return children[0];
+  return children;
+}
+
 export function createElement(type, props, ...children) {
   const dom = {
     type,
     props: {},
-  };
-
-  const checkChildren = () => {
-    const filteredChildren = children.filter(child => child);
-    if (filteredChildren.length === 1) return children[0];
-    if (filteredChildren.length === 0) return null;
-    return children;
   };
 
   if (typeof type === 'string' || type === null) {
@@ -18,6 +23,12 @@ export function createElement(type, props, ...children) {
     };
   } else if (typeof type === 'function') {
     dom.props = type();
+  } else if (type === Fragment) {
+    dom.type = 'Fragment';
+    dom.props = {
+      ...props,
+      children: checkChildren(children),
+    };
   } else {
     dom.props = {
       ...props,
