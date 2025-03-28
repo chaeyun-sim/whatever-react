@@ -2,11 +2,11 @@ import { Fragment } from './jsx-runtime';
 
 function checkChildren(children) {
   if (!children.length) return null;
-  if (typeof children === 'string' || children.flat().length === 1) return children[0];
-  return children;
+  const flat = children.flat();
+  return flat;
 }
 
-export function createElement(type, props, ...children) {
+function createElement(type, props, ...children) {
   const dom = {
     type,
     props: {},
@@ -34,3 +34,5 @@ export function createElement(type, props, ...children) {
 
   return Object.assign(dom);
 }
+
+export { createElement };
