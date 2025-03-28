@@ -8,7 +8,7 @@ export function render(dom, root) {
 
   if (props && props.children) {
     props.children.forEach(child => {
-      if (typeof child !== 'object') {
+      if (typeof child !== 'object' && child !== undefined) {
         // primitive type
         element.appendChild(document.createTextNode(child));
       } else {
