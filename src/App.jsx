@@ -1,15 +1,15 @@
 export default function App() {
   return (
-    <>
-      <div>
-        <span>hi</span>
-        <div>{2}</div>
-        <div>{null}</div>
-        <div>{undefined}</div>
-        <div>{true}</div>
-        <div>{false}</div>
-        <div>{[1, 2, 3]}</div>
-      </div>
-    </>
+    <div>
+      <header>
+        <h1>Title</h1>
+      </header>
+      <main>
+        <article>
+          <h2>Subtitle</h2>
+          <p>Content</p>
+        </article>
+      </main>
+    </div>
   );
 }
