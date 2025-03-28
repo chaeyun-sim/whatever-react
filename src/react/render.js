@@ -3,7 +3,8 @@ export function render(dom, root) {
 
   const { type, props } = dom;
 
-  const element = document.createElement(type);
+  const element =
+    type === 'Fragment' ? document.createDocumentFragment() : document.createElement(type);
 
   if (props && props.children) {
     props.children.forEach(child => {
