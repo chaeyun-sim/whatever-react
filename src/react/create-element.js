@@ -18,7 +18,8 @@ function createElement(type, props, ...children) {
       children: checkChildren(children),
     };
   } else if (typeof type === 'function') {
-    dom.props = type();
+    dom.type = type().type;
+    dom.props = type().props;
   } else if (type === Fragment) {
     dom.type = 'Fragment';
     dom.props = {
