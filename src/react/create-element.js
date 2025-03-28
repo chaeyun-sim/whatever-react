@@ -7,19 +7,18 @@ function checkChildren(children) {
 }
 
 function createElement(type, props, ...children) {
-  const dom = {
-    type,
-    props: {},
-  };
+  const dom = {};
 
   if (typeof type === 'string' || type === null) {
+    dom.type = type;
     dom.props = {
       ...props,
       children: checkChildren(children),
     };
   } else if (typeof type === 'function') {
-    dom.type = type().type;
-    dom.props = type().props;
+    const fn = type();
+    dom.type = fn.type;
+    dom.props = fn.props;
   } else if (type === Fragment) {
     dom.type = 'Fragment';
     dom.props = {
@@ -27,6 +26,7 @@ function createElement(type, props, ...children) {
       children: checkChildren(children),
     };
   } else {
+    dom.type = type;
     dom.props = {
       ...props,
       children: null,
