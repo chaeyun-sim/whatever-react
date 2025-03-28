@@ -7,15 +7,21 @@ export function render(dom, root) {
     type === 'Fragment' ? document.createDocumentFragment() : document.createElement(type);
 
   if (props && props.children) {
+    Object.keys(props).forEach(propKey => {
+      if (propKey === 'children') return;
+      if (propKey === 'style') {
+        Object.assign(element.style, props[propKey]);
+      } else {
+        element.setAttribute(propKey, props[propKey]);
+      }
+    });
+
     props.children.forEach(child => {
       if (typeof child !== 'object' && child !== undefined) {
-        // primitive type
         element.appendChild(document.createTextNode(child));
       } else {
         const childElement = render(child, element);
-        if (childElement) {
-          element.appendChild(childElement);
-        }
+        if (childElement) element.appendChild(childElement);
       }
     });
   }
