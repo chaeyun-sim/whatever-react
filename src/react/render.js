@@ -31,7 +31,7 @@ export function render(dom, root) {
   const element =
     type === 'Fragment' ? document.createDocumentFragment() : document.createElement(type);
 
-  if (props && props.children) {
+  if (props.children) {
     Object.keys(props).forEach(propKey => getProperty(element, props, propKey));
 
     props.children.forEach(child => {
