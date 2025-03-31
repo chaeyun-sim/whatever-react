@@ -8,8 +8,9 @@ export function render(dom, root) {
 
   if (props && props.children) {
     Object.keys(props).forEach(propKey => {
-      if (propKey === 'children') return;
-      if (propKey === 'style') {
+      if (propKey === 'children') {
+        return;
+      } else if (propKey === 'style') {
         Object.assign(element.style, props[propKey]);
       } else {
         element.setAttribute(propKey, props[propKey]);
