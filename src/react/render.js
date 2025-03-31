@@ -5,21 +5,32 @@ function getProperty(element, props, propKey) {
     return;
   }
 
+  const value = props[propKey];
+
   if (propKey === 'children') {
-    return;
+    props.children.forEach(child => {
+      if (typeof child !== 'object' && child !== undefined) {
+        element.appendChild(document.createTextNode(child));
+      } else {
+        const childElement = render(child, element);
+        if (childElement) element.appendChild(childElement);
+      }
+    });
   } else if (propKey === 'style') {
-    Object.assign(element.style, props[propKey]);
+    Object.assign(element.style, value);
   } else if (propKey.startsWith('on')) {
     const type = propKey.slice(2).toLowerCase();
-    element.addEventListener(type, props[propKey]);
+    element.addEventListener(type, value);
   } else if (propKey === 'ref') {
-    if (typeof props[propKey] === 'function') {
+    if (typeof value === 'function') {
       props[propKey](element);
     } else {
-      props[propKey].current = element;
+      value.current = element;
     }
+  } else if (propKey === 'className') {
+    element.setAttribute('class', value);
   } else {
-    element.setAttribute(propKey, props[propKey]);
+    element.setAttribute(propKey, value);
   }
 }
 
@@ -33,15 +44,6 @@ export function render(dom, root) {
 
   if (props.children) {
     Object.keys(props).forEach(propKey => getProperty(element, props, propKey));
-
-    props.children.forEach(child => {
-      if (typeof child !== 'object' && child !== undefined) {
-        element.appendChild(document.createTextNode(child));
-      } else {
-        const childElement = render(child, element);
-        if (childElement) element.appendChild(childElement);
-      }
-    });
   }
 
   root.appendChild(element);
