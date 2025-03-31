@@ -1,15 +1,23 @@
+import { useState } from './react/use-state';
+
+function createInitialTodos() {
+  return 1;
+}
+
 export default function App() {
+  const [value, setValue] = useState(createInitialTodos());
+
   return (
     <div>
       <header>
-        <h1>Title</h1>
+        <h1>Counter</h1>
       </header>
       <main>
         <article aria-label='article'>
-          <h2 style={{ color: 'blue' }}>Subtitle</h2>
-          <p>Content</p>
-          <input value={'1'} />
-          <button onClick={() => console.log('click')}>click!</button>
+          <h1>{value}</h1>
+          <button onClick={() => setValue(value + 1)}>Increas</button>
+          <button onClick={() => setValue(value - 1)}>Decrease</button>
+          <button onClick={() => setValue(prev => prev + 1)}>updator function</button>
         </article>
       </main>
     </div>
