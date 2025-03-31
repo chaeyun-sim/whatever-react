@@ -1,6 +1,6 @@
 import { Fragment } from './jsx-runtime';
 
-function checkChildren(children) {
+function getChildren(children) {
   if (!children.length) return null;
   const flat = children.flat();
   return flat;
@@ -13,7 +13,7 @@ function createElement(type, props, ...children) {
     dom.type = type;
     dom.props = {
       ...props,
-      children: checkChildren(children),
+      children: getChildren(children),
     };
   } else if (typeof type === 'function') {
     const fn = type();
@@ -23,7 +23,7 @@ function createElement(type, props, ...children) {
     dom.type = 'Fragment';
     dom.props = {
       ...props,
-      children: checkChildren(children),
+      children: getChildren(children),
     };
   } else {
     dom.type = type;
