@@ -1,4 +1,4 @@
-import { render } from './initial-render';
+import { reRender } from './re-render';
 
 const state = [];
 let currentStateKey = 0;
@@ -29,7 +29,7 @@ export function useState(initialState) {
       state[tmpKey] = nextState; // update the state to a different value
     }
 
-    render(); // trigger a re-render
+    reRender(); // trigger a re-render
   }
 
   const currentState = state[tmpKey];

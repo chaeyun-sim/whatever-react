@@ -4,12 +4,15 @@ import { resetStateKey } from './use-state';
 
 let root = null;
 
-export function render() {
+export function reRender() {
+  const app = App();
+  const domNode = document.getElementById('app');
+
   if (!root) {
-    const domNode = document.getElementById('app');
     root = createRoot(domNode);
   }
 
   resetStateKey();
-  root.render(App());
+
+  root.render(app);
 }
