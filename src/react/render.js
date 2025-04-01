@@ -8,7 +8,9 @@ function getProperty(element, props, propKey) {
   const value = props[propKey];
 
   if (propKey === 'children') {
-    props.children.forEach(child => {
+    const children = Array.isArray(props.children) ? props.children : [props.children];
+
+    children.forEach(child => {
       if (typeof child !== 'object' && child !== undefined) {
         element.appendChild(document.createTextNode(child));
       } else {
