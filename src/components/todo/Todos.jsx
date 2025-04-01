@@ -6,7 +6,15 @@ export default function Todos() {
 
   const toggle = idx => {
     setTodos(todos.map((todo, i) => (i === idx ? { ...todo, isChecked: !todo.isChecked } : todo)));
-    console.log(todos[0]);
+  };
+
+  const addClick = () => {
+    const nextTodo = { id: Date.now(), value: '', isChecked: false };
+    setNewTodo(nextTodo);
+    if (newTodo !== null) {
+      setTodos([...todos, newTodo]);
+      setNewTodo(null);
+    }
   };
 
   return (
@@ -63,11 +71,12 @@ export default function Todos() {
           <input
             value={newTodo.value}
             onChange={e => setNewTodo({ ...newTodo, value: e.target.value })}
+            autoFocus
           />
         </div>
       )}
 
-      <div style={{ dislay: 'flex', marginTop: '10px' }}>
+      <div style={{ display: 'flex', marginTop: '10px' }}>
         {newTodo && (
           <button
             style={{ width: '60px', marginRight: '20px' }}
@@ -78,15 +87,7 @@ export default function Todos() {
         )}
         <button
           style={{ width: '60px' }}
-          onClick={() => {
-            if (newTodo === null) {
-              setNewTodo({ id: Date.now(), value: '', isChecked: false });
-            } else {
-              if (newTodo.value.trim() === '') return;
-              setTodos([...todos, newTodo]);
-              setNewTodo(null);
-            }
-          }}
+          onClick={addClick}
         >
           추가
         </button>
