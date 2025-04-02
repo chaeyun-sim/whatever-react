@@ -8,14 +8,7 @@ function getProperty(element, props, propKey) {
   const value = props[propKey];
 
   if (propKey === 'children') {
-    props.children.forEach(child => {
-      if (typeof child !== 'object' && child !== undefined) {
-        element.appendChild(document.createTextNode(child));
-      } else {
-        const childElement = render(child, element);
-        if (childElement) element.appendChild(childElement);
-      }
-    });
+    return;
   } else if (propKey === 'style') {
     Object.assign(element.style, value);
   } else if (propKey.startsWith('on')) {
@@ -44,6 +37,15 @@ export function render(dom, root) {
 
   if (props.children) {
     Object.keys(props).forEach(propKey => getProperty(element, props, propKey));
+
+    props.children.forEach(child => {
+      if (typeof child !== 'object' && child !== undefined) {
+        element.appendChild(document.createTextNode(child));
+      } else {
+        const childElement = render(child, element);
+        if (childElement) element.appendChild(childElement);
+      }
+    });
   }
 
   root.appendChild(element);
