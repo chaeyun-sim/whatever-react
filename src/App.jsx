@@ -1,15 +1,27 @@
+import Todos from './components/todo/Todos';
+// import { useState } from './react/use-state';
+
+function createInitialTodos() {
+  return 1;
+}
+
 export default function App() {
+  // const [value, setValue] = useState(createInitialTodos());
+
   return (
-    <>
-      <div>
-        <span>hi</span>
-        <div>{2}</div>
-        <div>{null}</div>
-        <div>{undefined}</div>
-        <div>{true}</div>
-        <div>{false}</div>
-        <div>{[1, 2, 3]}</div>
-      </div>
-    </>
+    <div>
+      {/* <header>
+        <h1>Counter</h1>
+      </header>
+      <main>
+        <article aria-label='article'>
+          <h1>{value}</h1>
+          <button onClick={() => setValue(value + 1)}>Increas</button>
+          <button onClick={() => setValue(value - 1)}>Decrease</button>
+          <button onClick={() => setValue(prev => prev + 1)}>updator function</button>
+        </article>
+      </main> */}
+      <Todos />
+    </div>
   );
 }
