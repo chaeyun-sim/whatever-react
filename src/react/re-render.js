@@ -1,8 +1,10 @@
 import App from '@/App';
 import { createRoot } from './create-root';
 import { resetStateKey } from './use-state';
+import { diffing } from './diffing';
 
 let root = null;
+let prevNode = null;
 
 export function reRender() {
   const app = App();
@@ -13,6 +15,9 @@ export function reRender() {
   }
 
   resetStateKey();
+
+  diffing(prevNode, app, domNode);
+  prevNode = app;
 
   root.render(app);
 }
