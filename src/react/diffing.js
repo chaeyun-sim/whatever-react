@@ -11,7 +11,6 @@ function unmount(node, parent) {
 }
 
 function diffChildren(prevChildren, nextChildren, parentDom) {
-  console.log('[CHILDREN DIFFING]');
   const max = Math.max(prevChildren.length, nextChildren.length);
 
   for (let i = 0; i < max; i++) {
@@ -35,36 +34,29 @@ function diffChildren(prevChildren, nextChildren, parentDom) {
 function diffProps(prevProps, nextProps, parent) {
   for (const key of Object.keys(prevProps)) {
     if (!(key in nextProps)) {
-      console.log(`[PROP REMOVED] ${key}`);
       removeProperties(parent, prevProps, key);
     }
   }
 
   for (const [key, value] of Object.entries(nextProps)) {
     if (prevProps[key] !== value) {
-      console.log(`[PROP UPDATED] ${key}:`, prevProps[key], '→', value);
       makeProperties(parent, nextProps, key);
     }
   }
 }
 
 export function diffing(prevNode, nextNode, parentDom) {
-  console.log('[DIFFING] 비교 시작:', prevNode?.type, '→', nextNode?.type);
-
   if (!prevNode) {
-    console.log('[MOUNT]', nextNode.type);
     mount(nextNode, parentDom);
     return;
   }
 
   if (!nextNode) {
-    console.log('[UNMOUNT]', prevNode.type);
     unmount(prevNode, parentDom);
     return;
   }
 
   if (prevNode.type !== nextNode.type) {
-    console.log('[REPLACE]', prevNode.type, '→', nextNode.type);
     unmount(prevNode, parentDom);
     mount(nextNode, parentDom);
     return;

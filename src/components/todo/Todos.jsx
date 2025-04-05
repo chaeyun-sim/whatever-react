@@ -70,7 +70,9 @@ export default function Todos() {
         <div>
           <input
             value={newTodo.value}
-            onChange={e => setNewTodo({ ...newTodo, value: e.target.value })}
+            onChange={e => {
+              setNewTodo({ ...newTodo, value: e.target.value });
+            }}
             autoFocus
           />
         </div>
