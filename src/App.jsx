@@ -1,18 +1,17 @@
-import Todos from './components/todo/Todos';
+import { useEffect } from './react/use-effect';
 import { useState } from './react/use-state';
 
 export default function App() {
-  const [value, setValue] = useState('');
-  const handleChange = e => {
-    console.log(e.target.value);
-  };
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    console.log(`current: ${count}`);
+  }, [count]);
 
   return (
     <div>
-      <input
-        onChange={handleChange}
-        value={value}
-      />
+      <span>{count}</span>
+      <button onClick={() => setCount(prev => prev + 1)}>click</button>
     </div>
   );
 }
