@@ -12,12 +12,18 @@ export function reRender() {
 
   if (!root) {
     root = createRoot(domNode);
+    root.render(app);
   }
 
   resetStateKey();
 
-  diffing(prevNode, app, domNode);
-  prevNode = app;
+  const newPrevNode = app;
+
+  if (prevNode !== newPrevNode) {
+    diffing(prevNode, newPrevNode, domNode);
+  }
+
+  prevNode = newPrevNode;
 
   root.render(app);
 }
