@@ -1,7 +1,12 @@
+import { isPrimitiveType } from './check-primitive';
 import { handleProperties } from './control-properties';
 import { render } from './render';
 
 function mount(node, parent) {
+  if (isPrimitiveType(node)) {
+    parent.appendChild(document.createTextNode(String(node)));
+    return;
+  }
   render(node, parent);
 }
 
@@ -52,6 +57,15 @@ function diffProps(prevProps, nextProps, parent) {
 }
 
 export function diffing(prevNode, nextNode, parentDom) {
+  if (isPrimitiveType(prevNode) || isPrimitiveType(nextNode)) {
+    if (prevNode !== nextNode) {
+      if (parentDom.firstChild) {
+        parentDom.textContent = '';
+      }
+      mount(nextNode, parentDom);
+    }
+  }
+
   if (!prevNode) {
     mount(nextNode, parentDom);
     return;
