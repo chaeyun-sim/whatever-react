@@ -1,3 +1,5 @@
+import { SyntheticEvent } from './synthetic-event';
+
 export function handleProperties(element, props, propKey, mode = 'add') {
   const dangerousProps = ['innerHTML', 'outerHTML', 'insertAdjacentHTML'];
   if (dangerousProps.includes(propKey)) {
@@ -14,9 +16,13 @@ export function handleProperties(element, props, propKey, mode = 'add') {
   if (propKey.startsWith('on')) {
     const type = propKey.slice(2).toLowerCase();
     if (mode === 'add') {
-      element.addEventListener(type, propsValue);
+      if (typeof propsValue === 'function') {
+        element.addEventListener(type, event => propsValue(new SyntheticEvent(event)));
+      } else {
+        element.addEventListener(type, propsValue);
+      }
     } else {
-      element.removeEventListener(type, value);
+      element.removeEventListener(type);
     }
   }
 

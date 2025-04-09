@@ -1,4 +1,4 @@
-class SyntheticEvent {
+export class SyntheticEvent {
   constructor(event) {
     this.bubbles = false; // returns whether the event bubbles through the DOM;
     this.cancelable = false; // returns wheter the event can be canceled.
@@ -6,11 +6,15 @@ class SyntheticEvent {
     this.defaultPrevented = false; // returns whether preventdefault was canceled
     this.eventPhase = 0; // returns which phase the event is currently in.
     this.isTrusted = false; // returns whether the event was initiated by user
-    this.target = null; // returns the node on which the event has occurred
+    this.target = event.target; // returns the node on which the event has occurred
     this.timeStamp = 0; // returns the time when the event occurred
     this.nativeEvent = event; // original browser event object
     this.isPropagationStopped = false;
     this.isPersisted = false;
+  }
+
+  get value() {
+    return this.target?.value;
   }
 
   preventDefault() {
