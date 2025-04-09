@@ -1,4 +1,4 @@
-import { makeProperties } from './control-properties';
+import { handleProperties } from './control-properties';
 
 export function render(dom, root) {
   if (!dom) return null;
@@ -11,7 +11,7 @@ export function render(dom, root) {
   dom.dom = element;
 
   if (props.children) {
-    Object.keys(props).forEach(propKey => makeProperties(element, props, propKey));
+    Object.keys(props).forEach(propKey => handleProperties(element, props, propKey, 'add'));
 
     props.children.forEach(child => {
       if (typeof child !== 'object' && child !== undefined) {

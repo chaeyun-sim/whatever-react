@@ -1,55 +1,49 @@
-export function makeProperties(element, props, propKey) {
+export function handleProperties(element, props, propKey, mode = 'add') {
   const dangerousProps = ['innerHTML', 'outerHTML', 'insertAdjacentHTML'];
   if (dangerousProps.includes(propKey)) {
-    console.warn(`보안 상의 이유로 ${propKey} 사용을 지양하세요.`);
+    if (mode === 'add') {
+      console.warn(`보안 상의 이유로 ${propKey} 사용을 지양하세요.`);
+    }
     return;
   }
 
-  const value = props[propKey];
+  const propsValue = props[propKey];
 
-  if (propKey === 'children') {
-    return;
-  } else if (propKey === 'style') {
-    if (value && typeof value === 'object') {
-      Object.assign(element.style, value);
-    } else {
-      element.removeAttribute('style');
-    }
-  } else if (propKey.startsWith('on')) {
+  if (propKey === 'children') return;
+
+  if (propKey.startsWith('on')) {
     const type = propKey.slice(2).toLowerCase();
-    element.addEventListener(type, value);
-  } else if (propKey === 'ref') {
-    if (typeof value === 'function') {
-      value(element);
+    if (mode === 'add') {
+      element.addEventListener(type, propsValue);
     } else {
-      value.current = element;
+      element.removeEventListener(type, value);
     }
-  } else if (propKey === 'className') {
-    element.setAttribute('class', value);
-  } else {
-    element.setAttribute(propKey, value);
   }
-}
 
-export function removeProperties(element, props, propKey) {
-  const value = props[propKey];
-
-  if (propKey === 'children') {
-    return;
-  } else if (propKey === 'style') {
-    element.removeAttribute('style');
-  } else if (propKey.startsWith('on')) {
-    const type = propKey.slice(2).toLowerCase();
-    element.removeEventListener(type, value);
-  } else if (propKey === 'ref') {
-    if (typeof value === 'function') {
-      value(null);
-    } else {
-      value.current = null;
-    }
-  } else if (propKey === 'className') {
-    element.removeAttribute('class');
-  } else {
-    element.removeAttribute(propKey);
+  switch (propKey) {
+    case 'style':
+      if (mode === 'add' && propsValue && typeof propsValue === 'object') {
+        Object.assign(element.style, propsValue);
+      } else {
+        element.removeAttribute('style');
+      }
+      break;
+    case 'ref':
+      const refValue = mode === 'add' ? element : null;
+      if (typeof propsValue === 'function') {
+        propsValue(refValue);
+      } else {
+        propsValue.current = refValue;
+      }
+      break;
+    case 'className':
+      if (mode === 'add') {
+        element.setAttribute('class', propsValue);
+      } else {
+        element.removeAttribute('class');
+      }
+      break;
+    default:
+      element.setAttribute(propKey, propsValue);
   }
 }

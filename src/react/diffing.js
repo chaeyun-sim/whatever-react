@@ -1,4 +1,4 @@
-import { makeProperties, removeProperties } from './control-properties';
+import { handleProperties } from './control-properties';
 import { render } from './render';
 
 function mount(node, parent) {
@@ -6,7 +6,7 @@ function mount(node, parent) {
 }
 
 function unmount(node, parent) {
-  if (!node || !node.dom) return;
+  if (!node?.dom) return;
   parent.removeChild(node.dom);
 }
 
@@ -34,13 +34,13 @@ function diffChildren(prevChildren, nextChildren, parentDom) {
 function diffProps(prevProps, nextProps, parent) {
   for (const key of Object.keys(prevProps)) {
     if (!(key in nextProps)) {
-      removeProperties(parent, prevProps, key);
+      handleProperties(parent, prevProps, key, 'remove');
     }
   }
 
   for (const [key, value] of Object.entries(nextProps)) {
     if (prevProps[key] !== value) {
-      makeProperties(parent, nextProps, key);
+      handleProperties(parent, nextProps, key, 'add');
     }
   }
 }
