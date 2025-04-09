@@ -1,27 +1,18 @@
 import Todos from './components/todo/Todos';
-// import { useState } from './react/use-state';
-
-function createInitialTodos() {
-  return 1;
-}
+import { useState } from './react/use-state';
 
 export default function App() {
-  // const [value, setValue] = useState(createInitialTodos());
+  const [value, setValue] = useState('');
+  const handleChange = e => {
+    console.log(e.target.value);
+  };
 
   return (
     <div>
-      {/* <header>
-        <h1>Counter</h1>
-      </header>
-      <main>
-        <article aria-label='article'>
-          <h1>{value}</h1>
-          <button onClick={() => setValue(value + 1)}>Increas</button>
-          <button onClick={() => setValue(value - 1)}>Decrease</button>
-          <button onClick={() => setValue(prev => prev + 1)}>updator function</button>
-        </article>
-      </main> */}
-      <Todos />
+      <input
+        onChange={handleChange}
+        value={value}
+      />
     </div>
   );
 }

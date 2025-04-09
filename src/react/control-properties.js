@@ -15,15 +15,18 @@ export function handleProperties(element, props, propKey, mode = 'add') {
 
   if (propKey.startsWith('on')) {
     const type = propKey.slice(2).toLowerCase();
+    const normalizedType = type === 'change' ? 'input' : type;
+
     if (mode === 'add') {
       if (typeof propsValue === 'function') {
-        element.addEventListener(type, event => propsValue(new SyntheticEvent(event)));
+        element.addEventListener(normalizedType, event => propsValue(new SyntheticEvent(event)));
       } else {
-        element.addEventListener(type, propsValue);
+        element.addEventListener(normalizedType, propsValue);
       }
     } else {
-      element.removeEventListener(type);
+      element.removeEventListener(normalizedType);
     }
+    return;
   }
 
   switch (propKey) {

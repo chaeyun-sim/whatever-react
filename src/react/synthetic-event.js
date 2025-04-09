@@ -13,10 +13,6 @@ export class SyntheticEvent {
     this.isPersisted = false;
   }
 
-  get value() {
-    return this.target?.value;
-  }
-
   preventDefault() {
     // Prevents the default browser action for the event.
     this.defaultPrevented = true;
