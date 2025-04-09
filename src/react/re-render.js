@@ -2,6 +2,7 @@ import App from '@/App';
 import { createRoot } from './create-root';
 import { resetStateKey } from './use-state';
 import { diffing } from './diffing';
+import { resetEffectKey } from './use-effect';
 
 let root = null;
 let prevNode = null;
@@ -16,6 +17,7 @@ export function reRender() {
   }
 
   resetStateKey();
+  resetEffectKey();
 
   const newPrevNode = app;
 
