@@ -27,6 +27,12 @@ function diffChildren(prevChildren, nextChildren, parentDom) {
       return;
     }
 
+    if (prevChild?.key !== nextChild?.key) {
+      unmount(prevChild, currentParent);
+      mount(nextChild, currentParent);
+      return;
+    }
+
     diffing(prevChild, nextChild, currentParent);
   }
 }
