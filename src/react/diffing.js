@@ -42,7 +42,7 @@ function diffChildren(prevChildren, nextChildren, parentDom) {
   }
 }
 
-function diffProps(prevProps, nextProps, parent) {
+function diffProps(prevProps = {}, nextProps = {}, parent) {
   for (const key of Object.keys(prevProps)) {
     if (!(key in nextProps)) {
       handleProperties(parent, prevProps, key, 'remove');
@@ -85,5 +85,9 @@ export function diffing(prevNode, nextNode, parentDom) {
   if (prevNode === nextNode) return;
 
   diffProps(prevNode.props, nextNode.props, prevNode.dom || nextNode.dom);
-  diffChildren(prevNode.props.children, nextNode.props.children, prevNode.dom || nextNode.dom);
+  diffChildren(
+    prevNode.props?.children || [],
+    nextNode.props?.children || [],
+    prevNode.dom || nextNode.dom
+  );
 }
