@@ -8,6 +8,14 @@ export default function App() {
     console.log(`current: ${count}`);
   }, [count]);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      console.log('끝!');
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div>
       <span>{count}</span>
