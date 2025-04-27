@@ -1,27 +1,25 @@
-import Todos from './components/todo/Todos';
-// import { useState } from './react/use-state';
-
-function createInitialTodos() {
-  return 1;
-}
+import { useEffect } from './react/use-effect';
+import { useState } from './react/use-state';
 
 export default function App() {
-  // const [value, setValue] = useState(createInitialTodos());
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    console.log(`current: ${count}`);
+  }, [count]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      console.log('끝!');
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div>
-      {/* <header>
-        <h1>Counter</h1>
-      </header>
-      <main>
-        <article aria-label='article'>
-          <h1>{value}</h1>
-          <button onClick={() => setValue(value + 1)}>Increas</button>
-          <button onClick={() => setValue(value - 1)}>Decrease</button>
-          <button onClick={() => setValue(prev => prev + 1)}>updator function</button>
-        </article>
-      </main> */}
-      <Todos />
+      <span>{count}</span>
+      <button onClick={() => setCount(prev => prev + 1)}>click</button>
     </div>
   );
 }
