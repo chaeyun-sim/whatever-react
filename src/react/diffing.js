@@ -1,7 +1,12 @@
+import { isPrimitiveType } from './check-primitive';
 import { handleProperties } from './control-properties';
 import { render } from './render';
 
 function mount(node, parent) {
+  if (isPrimitiveType(node)) {
+    parent.appendChild(document.createTextNode(String(node)));
+    return;
+  }
   render(node, parent);
 }
 
@@ -37,7 +42,7 @@ function diffChildren(prevChildren, nextChildren, parentDom) {
   }
 }
 
-function diffProps(prevProps, nextProps, parent) {
+function diffProps(prevProps = {}, nextProps = {}, parent) {
   for (const key of Object.keys(prevProps)) {
     if (!(key in nextProps)) {
       handleProperties(parent, prevProps, key, 'remove');
@@ -52,6 +57,15 @@ function diffProps(prevProps, nextProps, parent) {
 }
 
 export function diffing(prevNode, nextNode, parentDom) {
+  if (isPrimitiveType(prevNode) || isPrimitiveType(nextNode)) {
+    if (prevNode !== nextNode) {
+      if (parentDom.firstChild) {
+        parentDom.textContent = '';
+      }
+      mount(nextNode, parentDom);
+    }
+  }
+
   if (!prevNode) {
     mount(nextNode, parentDom);
     return;
@@ -71,5 +85,9 @@ export function diffing(prevNode, nextNode, parentDom) {
   if (prevNode === nextNode) return;
 
   diffProps(prevNode.props, nextNode.props, prevNode.dom || nextNode.dom);
-  diffChildren(prevNode.props.children, nextNode.props.children, prevNode.dom || nextNode.dom);
+  diffChildren(
+    prevNode.props?.children || [],
+    nextNode.props?.children || [],
+    prevNode.dom || nextNode.dom
+  );
 }
